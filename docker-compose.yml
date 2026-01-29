@@ -1,0 +1,59 @@
+volumes:
+  pgdata:
+
+networks:
+  laravel:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: laravel_app
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - laravel
+
+  db:
+    image: postgres:15-alpine
+    container_name: laravel_db
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - laravel
+
+  redis:
+    image: redis:7-alpine
+    container_name: laravel_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel
+
+  composer:
+    image: composer:2
+    container_name: laravel_composer
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - laravel
