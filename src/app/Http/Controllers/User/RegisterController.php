@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
-use App\Application\Auth\RegisterUser;
+use App\Application\User\RegisterUser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RegisterController
@@ -11,7 +12,7 @@ class RegisterController
         private RegisterUser $registerUser
     ) {}
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $this->registerUser->execute(
             $request->input('name'),
@@ -19,6 +20,6 @@ class RegisterController
             $request->input('password')
         );
 
-        return response()->json(['message' => 'User created'], 201);
+        return response()->json(['message' => 'User created', 'success' => true], 201);
     }
 }
