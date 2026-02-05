@@ -26,6 +26,7 @@ class EloquentUserRepository implements UserRepository
         }
 
         return new User(
+            $model->name,
             $model->email,
             $model->password
         );
