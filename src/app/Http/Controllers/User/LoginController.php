@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Application\User\LoginUser;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
 
 class LoginController
 {
@@ -12,16 +14,23 @@ class LoginController
         private LoginUser $loginUser
     ) {}
 
-    public function __invoke(Request $request): JsonResponse
+    public function show(): View
     {
-        $user = $this->loginUser->execute(
-            $request->input('email'),
-            $request->input('password')
+        return view('auth.login');
+    }
+
+    public function execute(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        $this->loginUser->execute(
+            $data['email'],
+            $data['password']
         );
 
-        return response()->json([
-            'message' => 'Logged with success',
-            'success' => true
-        ], 200);
+        return redirect()->route('get-user');
     }
 }

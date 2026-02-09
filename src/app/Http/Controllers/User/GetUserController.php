@@ -9,17 +9,19 @@ use Illuminate\Http\Request;
 class GetUserController
 {
     public function __construct(
-        GetUser $getUser
+        private GetUser $getUser
     ) {}
 
     public function __invoke(Request $request): JsonResponse
     {
-        $user = $this->getUser->execute();
+        $user = $this->getUser->execute(
+            $request->input('uuid')
+        );
 
         return response()->json([
             'message' => 'Get user infos with success.',
             'success' => true,
-            'data' => $user
+            'data' => $user,
         ], 200);
     }
 }

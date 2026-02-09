@@ -14,9 +14,9 @@ class GetUser
         $this->userRepository = $userRepository;
     }
 
-    public function execute(): User
+    public function execute(string $uuid): ?User
     {
-        $user = $this->userRepository->getUser();
+        $user = $this->userRepository->getUser($uuid);
 
         if (! $user) {
             throw new \Exception('User not founded.', 404);
