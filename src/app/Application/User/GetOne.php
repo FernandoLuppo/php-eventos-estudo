@@ -5,7 +5,7 @@ namespace App\Application\User;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
-class GetUser
+class GetOne
 {
     private UserRepository $userRepository;
 
@@ -16,7 +16,7 @@ class GetUser
 
     public function execute(string $uuid): ?User
     {
-        $user = $this->userRepository->getUser($uuid);
+        $user = $this->userRepository->getOne($uuid);
 
         if (! $user) {
             throw new \Exception('User not founded.', 404);

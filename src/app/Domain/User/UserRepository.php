@@ -8,5 +8,5 @@ interface UserRepository
 
     public function findByEmail(string $email): ?User;
 
-    public function getUser(string $uuid): ?User;
+    public function getOne(string $uuid): ?User;
 }

@@ -32,7 +32,7 @@ class EloquentUserRepository implements UserRepository
         );
     }
 
-    public function getUser(string $uuid): ?User
+    public function getOne(string $uuid): ?User
     {
         $model = UserModel::where('uuid', $uuid)->first();
 

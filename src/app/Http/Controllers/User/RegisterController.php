@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Application\User\RegisterUser;
+use App\Application\User\Register;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 class RegisterController
 {
     public function __construct(
-        private RegisterUser $registerUser
+        private Register $register
     ) {}
 
     public function show(): View
@@ -26,12 +26,12 @@ class RegisterController
             'password' => 'required|min:8',
         ]);
 
-        $this->registerUser->execute(
+        $this->register->execute(
             $data['name'],
             $data['email'],
             $data['password']
         );
 
-        return redirect()->route('login');
+        return redirect()->route('login.show');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Application\User;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
-class RegisterUser
+class Register
 {
     private UserRepository $userRepository;
 

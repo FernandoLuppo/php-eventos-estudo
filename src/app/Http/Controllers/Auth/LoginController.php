@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Auth;
 
-use App\Application\User\LoginUser;
+use App\Application\Auth\Login;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 class LoginController
 {
     public function __construct(
-        private LoginUser $loginUser
+        private Login $login
     ) {}
 
     public function show(): View
@@ -26,7 +26,7 @@ class LoginController
             'password' => 'required|min:8',
         ]);
 
-        $this->loginUser->execute(
+        $this->login->execute(
             $data['email'],
             $data['password']
         );
