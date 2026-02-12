@@ -2,24 +2,26 @@
 
 namespace App\Http\Controller\User;
 
-use App\Application\User\GetUser;
+use App\Application\User\GetOne;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class GetUserController
+class GetOneController
 {
     public function __construct(
-        GetUser $getUser
+        private GetOne $getOne
     ) {}
 
     public function __invoke(Request $request): JsonResponse
     {
-        $user = $this->getUser->execute();
+        $user = $this->getOne->execute(
+            $request->input('uuid')
+        );
 
         return response()->json([
             'message' => 'Get user infos with success.',
             'success' => true,
-            'data' => $user
+            'data' => $user,
         ], 200);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\User;
+namespace App\Application\Auth;
 
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 
-class LoginUser
+class Login
 {
     private UserRepository $userRepository;
 

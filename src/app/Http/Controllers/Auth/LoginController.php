@@ -1,37 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Auth;
 
-use App\Application\User\Register;
+use App\Application\Auth\Login;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class RegisterController
+
+class LoginController
 {
     public function __construct(
-        private Register $register
+        private Login $login
     ) {}
 
     public function show(): View
     {
-        return view('user.register');
+        return view('auth.login');
     }
 
     public function execute(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => 'required|string|min:3',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
 
-        $this->register->execute(
-            $data['name'],
+        $this->login->execute(
             $data['email'],
             $data['password']
         );
 
-        return redirect()->route('login.show');
+        return redirect()->route('get-user');
     }
 }
