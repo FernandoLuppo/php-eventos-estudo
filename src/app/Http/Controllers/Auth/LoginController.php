@@ -26,11 +26,11 @@ class LoginController
             'password' => 'required|min:8',
         ]);
 
-        $this->login->execute(
+        $user = $this->login->execute(
             $data['email'],
             $data['password']
         );
 
-        return redirect()->route('get-user');
+        return redirect()->route('get-user.show', ['uuid' => $user->getUuid()]);
     }
 }

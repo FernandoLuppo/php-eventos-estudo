@@ -2,11 +2,9 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\RegisterController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\GetOneController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
 
 // Register
 Route::get('/register', [RegisterController::class, 'show'])
@@ -21,3 +19,8 @@ Route::get('/login', [LoginController::class, 'show'])
 
 Route::post('/login', [LoginController::class, 'execute'])
     ->name('login.execute');
+
+// Get User
+Route::get('/get-user/{uuid}', [GetOneController::class, 'show'])
+    ->name('get-user.show');
+
