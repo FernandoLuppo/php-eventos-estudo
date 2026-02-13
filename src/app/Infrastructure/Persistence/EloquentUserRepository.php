@@ -26,6 +26,22 @@ class EloquentUserRepository implements UserRepository
         }
 
         return new User(
+            $model->name,
+            $model->email,
+            $model->password
+        );
+    }
+
+    public function getOne(string $uuid): ?User
+    {
+        $model = UserModel::where('uuid', $uuid)->first();
+
+        if (! $model) {
+            return null;
+        }
+
+        return new User(
+            $model->name,
             $model->email,
             $model->password
         );

@@ -1,22 +1,27 @@
 <?php
 
-// Abre o arquivo PHP
+namespace App\Domain\User;
 
-namespace App\Domain\User; // Equivalente ao export
+use Illuminate\Support\Str;
 
 class User
 {
+    private string $uuid;
     private string $name;
-
     private string $email;
-
     private string $passwordHash;
 
     public function __construct(string $name, string $email, string $passwordHash)
     {
+        $this->uuid = Str::uuid()->toString();
         $this->name = $name;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
+    }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     public function getName(): string
